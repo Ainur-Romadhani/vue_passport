@@ -32,6 +32,11 @@ const routes = [
         path: '/todolist/edit/:id',
         name: 'todolist.edit',
         component: () => import('@/views/todolist/edit.vue')
+    },
+    {
+        path: '/todolist/tongsampah/:id',
+        name: 'todolist.tongsampah',
+        component: () => import('@/views/todolist/tong.vue')
     }
 ]
 

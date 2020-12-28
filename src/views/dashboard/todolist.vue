@@ -7,7 +7,7 @@
                         <h4>Todo List {{datauser.name}}</h4>
                         <hr>
                         <router-link :to="{name: 'todolist.create', params:{id: datauser.id }}" class="btn btn-md btn-success">Create Todo</router-link>
-
+                        <router-link :to="{name: 'todolist.tongsampah', params:{id: datauser.id }}" class="btn btn-md btn-danger" style="margin-left: 15px">Tong Sampah</router-link>
                         <table class="table table-striped table-bordered mt-4">
                             <thead class="thead-dark">
                                 <tr>
@@ -26,7 +26,7 @@
                                     <td>{{todo.proggress}} %</td>
                                     <td class="text-center">
                                         <router-link :to="{name: 'todolist.edit', params:{id: todo.id_todos }}" class="btn btn-sm btn-primary mr-1">EDIT</router-link>
-                                        <button class="btn btn-sm btn-danger ml-1">DELETE</button>
+                                        <button @click.prevent="todoDelete(todo.id_todos)" class="btn btn-sm btn-danger ml-1">DELETE</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -74,11 +74,28 @@ import axios from 'axios'
 
               )
 
+              function todoDelete(id_todos){
+
+                  let delete_by   = datauser.value.email
+                  
+                  axios.post(`http://localhost:8000/api/todo/softdelete/${id_todos}`,{
+
+                      delete_by : delete_by
+
+                  }).then(() => {
+                      datatodo.value.splice(datatodo.value.indexOf(id_todos),1);
+
+                  }).catch(error => {
+                      console.log(error.response.data)
+                  })
+              }
+
               return {
                   datatodo,
                   router,
                   route,
-                  datauser
+                  datauser,
+                  todoDelete
 
               }
 
